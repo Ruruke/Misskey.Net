@@ -14,6 +14,7 @@ public class MiStreaming
     private String _id = "";
     private String _token = "";
     private String _baseUrl = "";
+    private bool _autoReconnect = true;
     private event EventHandler<MiStreamConnect> _ConnectEvent;
     private event EventHandler<MiStreamDisconnect> _DisconnectEvent;
     private event EventHandler<MiStreamMessageReceived> _MiStreamMessageReceived;
@@ -44,8 +45,9 @@ public class MiStreaming
     }
     
     private WebSocket _websocket = null!;
-    public void start()
+    public void start(bool autoReconnct = true)
     {
+        _autoReconnect = autoReconnct;
         _websocket = new WebSocket($"wss://{_baseUrl}/streaming?i={_token}");
         _websocket.Opened += websocket_Opened;
         _websocket.Error += websocket_Error;
@@ -58,9 +60,9 @@ public class MiStreaming
 
     private void websocket_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
-        Console.WriteLine("Received : "+e.Message);
+        // Console.WriteLine("Received : "+e.Message);
         MiAny miAny = JsonSerializer.Deserialize<MiAny>(e.Message)!;
-        Console.WriteLine("Type > "+miAny.body.type);
+        // Console.WriteLine("Type > "+miAny.body.type);
         MiStreamMessageReceived args;
         switch (miAny.body.type)
         {
@@ -82,11 +84,12 @@ public class MiStreaming
 
     private void websocket_Closed(object? sender, EventArgs e)
     {
-        Console.WriteLine("Closed.");
         _DisconnectEvent.Invoke(this,null!);
         //RE CONNECT
-        Console.WriteLine("RECONNECT");
+        if(_autoReconnect){
         start();
+
+        }    
     }
 
     private void websocket_Error(object? sender, SuperSocket.ClientEngine.ErrorEventArgs e)
@@ -98,7 +101,6 @@ public class MiStreaming
 
     private void websocket_Opened(object sender, EventArgs e)
     {
-        Console.WriteLine("Opend");
         // websocket.Send("{\"type\": \"connect\", \"body\": {\"channel\": \"localTimeline\", \"id\": \"test\"}}");
 
         _websocket.Send($"{{\"type\": \"connect\", \"body\": {{\"channel\": \"{_ch}\", \"id\": \"{_id}\"}}}}");
