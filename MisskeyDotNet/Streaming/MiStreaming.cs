@@ -13,6 +13,7 @@ public class MiStreaming
     private String _ch = "";
     private String _id = "";
     private String _token = "";
+    private String _baseUrl = "";
     private event EventHandler<MiStreamConnect> _ConnectEvent;
     private event EventHandler<MiStreamDisconnect> _DisconnectEvent;
     private event EventHandler<MiStreamMessageReceived> _MiStreamMessageReceived;
@@ -34,17 +35,18 @@ public class MiStreaming
         add => this._MiStreamMessageReceived += value;
         remove => this._MiStreamMessageReceived -= value;
     }
-    public MiStreaming(String channel, String id, String token)
+    public MiStreaming(String channel, String id, String token, String baseUrl = "misskey.io")
     {
         _ch = channel;
         _id = id;
         _token = token;
+        _baseUrl = baseUrl;
     }
     
     private WebSocket _websocket = null!;
     public void start()
     {
-        _websocket = new WebSocket($"wss://misskey.io/streaming?i={_token}");
+        _websocket = new WebSocket($"wss://{_baseUrl}/streaming?i={_token}");
         _websocket.Opened += websocket_Opened;
         _websocket.Error += websocket_Error;
         _websocket.Closed += websocket_Closed;
