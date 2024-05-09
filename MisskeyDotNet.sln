@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisskeyDotNet", "MisskeyDotNet\MisskeyDotNet.csproj", "{C33B546E-AF8F-4CCF-9734-6230049A8815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{8C3F1750-AD22-4520-9818-9BED88281145}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C33B546E-AF8F-4CCF-9734-6230049A8815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33B546E-AF8F-4CCF-9734-6230049A8815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33B546E-AF8F-4CCF-9734-6230049A8815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33B546E-AF8F-4CCF-9734-6230049A8815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C3F1750-AD22-4520-9818-9BED88281145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C3F1750-AD22-4520-9818-9BED88281145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C3F1750-AD22-4520-9818-9BED88281145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C3F1750-AD22-4520-9818-9BED88281145}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
