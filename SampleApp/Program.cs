@@ -4,12 +4,14 @@ using System.Text.Json;
 using MisskeyDotNet.Object;
 using MisskeyDotNet.Streaming;
 using MisskeyDotNet.Streaming.Event;
+using MisskeyDotNet.WebAPI;
 using WebSocket4Net;
 
 namespace SampleApp;
 
 public abstract class SampleApp
 {
+    private static String token = "";
     public static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.GetEncoding("utf-8"); // コンソールの文字コードいい加減UTF-8に統一してくれねぇの？
@@ -24,8 +26,8 @@ public abstract class SampleApp
         {
             
 
-            string token = new StreamReader(tokenFile, Encoding.UTF8).ReadToEnd();
-            MiStreaming mi = new MiStreaming("main", "foo",token);
+            token = new StreamReader(tokenFile, Encoding.UTF8).ReadToEnd();
+            MiStreaming mi = new MiStreaming("localTimeline", "foo",token);
             mi.Connect += MiOnConnect;
             mi.MessageReceived += MiOnMessageReceived;
             mi.start();
@@ -44,5 +46,9 @@ public abstract class SampleApp
     private static void MiOnConnect(object? sender, MiStreamConnect e)
     {
         Console.WriteLine("CONNECT EVENT!");
+        // MiWebAPI miWebApi = new MiWebAPI(token);
+        // MiSendNote note = new MiSendNote();
+        // note.text = "Hello Misskey!";
+        // _ = miWebApi.Note(token,note);
     }
 }

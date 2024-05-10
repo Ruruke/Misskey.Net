@@ -60,22 +60,28 @@ public class MiStreaming
 
     private void websocket_MessageReceived(object? sender, MessageReceivedEventArgs e)
     {
-        // Console.WriteLine("Received : "+e.Message);
+        Console.WriteLine("Received : "+e.Message);
         MiAny miAny = JsonSerializer.Deserialize<MiAny>(e.Message)!;
-        // Console.WriteLine("Type > "+miAny.body.type);
+        Console.WriteLine("Type > "+miAny.body.type);
         MiStreamMessageReceived args;
         switch (miAny.body.type)
         {
+            case "note":
+                MiNote miNote = JsonSerializer.Deserialize<MiNote>(e.Message)!;
+                // Console.WriteLine(miNote.body.body.text);
+                args = new MiStreamMessageReceived() { type = MiStreamEventType.Note ,message = miNote};
+                _MiStreamMessageReceived.Invoke(this,args);
+                break;
             case "mention":
                 MiMention miMention = JsonSerializer.Deserialize<MiMention>(e.Message)!;
-                Console.WriteLine(miMention.body.body.text);
+                // Console.WriteLine(miMention.body.body.text);
                 args = new MiStreamMessageReceived() { type = MiStreamEventType.Mention ,message = miMention};
                 _MiStreamMessageReceived.Invoke(this,args);
                 break;
             
             case "notification":
                 MiNotification miNotification = JsonSerializer.Deserialize<MiNotification>(e.Message)!;
-                Console.WriteLine(miNotification.body.body.type);
+                // Console.WriteLine(miNotification.body.body.type);
                 args = new MiStreamMessageReceived() { type = MiStreamEventType.Notification ,message = miNotification};
                 _MiStreamMessageReceived.Invoke(this,args);
                 break;
